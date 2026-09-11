@@ -1,0 +1,353 @@
+{
+  "Navbar": {
+    "links": {
+      "home": "Home",
+      "about": "About Us",
+      "courses": "Courses",
+      "consulting": "Engineering Consulting",
+      "fieldServices": "Field Services",
+      "blog": "Blog",
+      "store": "Store",
+      "certificates": "Certificates",
+      "verifyCertificate": "Verify Certificate",
+      "services": "Services",
+      "contact": "Contact Us"
+    },
+    "login": "Login"
+  },
+  "Hero": {
+    "title1": "Empowering Reliability.",
+    "title2": "Driving Peak Performance.",
+    "subtitle": "World-class training and consulting in reliability engineering, condition monitoring, and asset management.",
+    "explore": "Explore Courses",
+    "servicesBtn": "Our Services"
+  },
+  "Features": {
+    "f1": { "title": "Expert Instructors", "desc": "Learn directly from professionals with rich industry experience" },
+    "f2": { "title": "Practical Training", "desc": "Hands-on application experience with real-world scenarios" },
+    "f3": { "title": "Global Standards", "desc": "Courses aligned with the latest international standards" },
+    "f4": { "title": "Certified Credentials", "desc": "Earn globally recognized and accredited certificates" }
+  },
+  "About": {
+    "title": "About ReliNova",
+    "subtitle": "Engineering Reliability and Industrial Excellence",
+    "desc": "ReliNova Consulting is a specialized engineering institute aiming to advance industrial performance through professional training, technical consulting, and innovative engineering solutions.",
+    "specialties": "We specialize in condition monitoring, reliability engineering, predictive maintenance, rotating equipment, asset management, and industrial performance improvement to help organizations enhance asset reliability and operational efficiency.",
+    "missionStatement": "Our mission goes beyond delivering courses; we strive to build engineering capabilities, develop technical expertise, and support industries in achieving sustainable operational excellence.",
+    "vision": {
+      "title": "Our Vision",
+      "desc": "To become the leading institute in engineering training and reliability consulting in the Middle East and Africa."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "desc": "Empowering engineers and industrial organizations with world-class knowledge, practical skills, and engineering consulting."
+    },
+    "whatWeDo": {
+      "title": "What We Do",
+      "subtitle": "Integrated Engineering and Training Solutions",
+      "training": {
+        "title": "Specialized Training",
+        "desc": "Professional courses aligned with the latest international standards."
+      },
+      "consulting": {
+        "title": "Technical Consulting",
+        "desc": "Advanced guidance and expertise to solve complex industrial problems."
+      },
+      "fieldServices": {
+        "title": "Field Services",
+        "desc": "Condition monitoring and direct technical assessments on site."
+      },
+      "professionalDev": {
+        "title": "Professional Development",
+        "desc": "Capacity building and technical skill development for human resources."
+      }
+    },
+    "extraCards": {
+      "card1": {
+        "title": "Asset Management",
+        "desc": "Enhance asset availability and optimize performance throughout their lifecycle."
+      },
+      "card2": {
+        "title": "Knowledge Transfer",
+        "desc": "Disseminate modern engineering methodologies and best practices."
+      },
+      "card3": {
+        "title": "Advanced Technologies",
+        "desc": "Adopt modern diagnostic tools and predictive maintenance practices."
+      }
+    },
+    "expertise": {
+      "title": "Areas of Expertise",
+      "items": [
+        "Condition Monitoring",
+        "Reliability Engineering",
+        "Predictive Maintenance",
+        "Rotating Equipment",
+        "Asset Management",
+        "Root Cause Failure Analysis"
+      ]
+    },
+    "industries": {
+      "title": "Industries We Serve",
+      "items": [
+        "Oil & Gas",
+        "Petrochemicals",
+        "Power Generation",
+        "Manufacturing",
+        "Mining & Metals",
+        "Water Desalination"
+      ]
+    },
+    "whyChooseUs": {
+      "title": "Why Choose ReliNova?",
+      "desc": "We combine engineering expertise and practical industrial experience to deliver solutions that create tangible value.",
+      "points": [
+        "Technical Excellence",
+        "International Best Practices",
+        "Practical Engineering Solutions",
+        "Experienced Professional Engineers",
+        "Modern Training Methodologies",
+        "Advanced Diagnostic Technologies",
+        "Client-Centric Approach",
+        "Continuous Innovation",
+        "Long-term Partnerships"
+      ]
+    },
+    "values": {
+      "title": "Our Core Values",
+      "integrity": { "title": "Integrity", "desc": "We adhere to the highest standards of professionalism, ethics, and transparency." },
+      "excellence": { "title": "Excellence", "desc": "We strive to achieve quality in every training program and consulting project." },
+      "innovation": { "title": "Innovation", "desc": "We embrace emerging technologies and modern engineering practices." },
+      "knowledge": { "title": "Knowledge Sharing", "desc": "We believe that knowledge is the foundation of industrial success." },
+      "safety": { "title": "Safety", "desc": "We promote engineering practices that protect people, equipment, and the environment." },
+      "customerSuccess": { "title": "Customer Success", "desc": "Our clients' success is the true measure of our success." }
+    }
+  },
+  "Services": {
+    "tag": "Our Services",
+    "title": "Engineering Solutions for More Reliable Operations",
+    "pageSubtitle": "We provide integrated and advanced engineering solutions to elevate operational asset efficiency and achieve the highest levels of industrial reliability.",
+    "exploreMore": "Explore More",
+    "ctaTitle": "Need a Customized Engineering Consultation for Your Organization?",
+    "ctaDesc": "Our team of experts is ready to provide advanced solutions and technical assessments.",
+    "ctaButton": "Contact Us Now",
+    "consulting": { "title": "Reliability Consulting", "desc": "Improve reliability and boost asset performance." },
+    "conditionMonitoring": { "title": "Condition Monitoring", "desc": "Advanced techniques for predictive maintenance." },
+    "audit": { "title": "Reliability Audit", "desc": "Comprehensive assessments to optimize maintenance systems." },
+    "rcm": { "title": "RCM Studies", "desc": "Reliability-Centered Maintenance studies." },
+    "failureAnalysis": { "title": "Failure Analysis", "desc": "Root cause analysis and failure investigation." },
+    "trainingDev": { "title": "Training & Development", "desc": "Customized training solutions for your team." }
+  },
+  "Courses": {
+    "tag": "Our Training",
+    "title": "Most Demanded Courses",
+    "subtitle": "Explore all available training courses classified by various engineering disciplines.",
+    "viewAll": "View All Courses",
+    "viewDetails": "View Details",
+    "comingSoon": "Coming Soon",
+    "duration": "Duration",
+    "level": "Level",
+    "detailsBtn": "Details",
+    "duration3Days": "3 Days",
+    "duration4Days": "4 Days",
+    "duration5Days": "5 Days",
+    "levelBeginner": "Beginner",
+    "levelIntermediate": "Intermediate",
+    "levelAdvanced": "Advanced",
+    "categories": {
+      "maintenance": "Maintenance Engineering",
+      "vibrationLubrication": "Vibration Analysis & Lubrication",
+      "reliability": "Reliability & Failure Management",
+      "rotatingEquipment": "Rotating Equipment"
+    },
+    "items": {
+      "preventive-maintenance": {
+        "title": "Preventive & Routine Maintenance",
+        "desc": "Comprehensive coverage of foundations and techniques for scheduling preventive maintenance to minimize sudden failures."
+      },
+      "predictive-maintenance": {
+        "title": "Predictive Maintenance & Machine Condition",
+        "desc": "Using advanced monitoring methods to predict failures before they occur."
+      },
+      "cmms": {
+        "title": "Computerized Maintenance Management Systems (CMMS)",
+        "desc": "Efficiently managing work orders, inventory, and equipment assets through systems."
+      },
+      "shutdown-management": {
+        "title": "Shutdown & Turnaround Management",
+        "desc": "Planning and executing major plant turnarounds on time and safely."
+      },
+      "planning-and-scheduling": {
+        "title": "Advanced Maintenance Planning & Scheduling",
+        "desc": "How to organize resources, spare parts, and work crews to achieve peak operational efficiency."
+      },
+      "sap-pm": {
+        "title": "SAP PM for Maintenance Management",
+        "desc": "Mastering the Plant Maintenance module in the global SAP system."
+      },
+      "vibration-analysis-cat-i": {
+        "title": "Vibration Analysis - Category I",
+        "desc": "Fundamental principles of condition monitoring and vibration measurement for rotating machinery."
+      },
+      "vibration-analysis-cat-ii": {
+        "title": "Vibration Analysis - Category II",
+        "desc": "Deepening frequency spectrum analysis concepts and diagnosing bearing and pump faults."
+      },
+      "vibration-analysis-cat-iii": {
+        "title": "Vibration Analysis - Category III",
+        "desc": "Advanced analysis and detection of complex issues in major machinery."
+      },
+      "ultrasound-testing-ndt-level-i": {
+        "title": "Ultrasound Testing (NDT Level I)",
+        "desc": "Detecting leaks and material defects using acoustic devices."
+      },
+      "mlt": {
+        "title": "Machinery Lubrication Technician (MLT)",
+        "desc": "Basics of greases, oils, and correct lubrication methods for machinery."
+      },
+      "mle": {
+        "title": "Machinery Lubrication Engineer (MLE)",
+        "desc": "Comprehensive coverage of asset health estimation, machine learning engineering, and advanced lubrication."
+      },
+      "lubrication-analysis-i": {
+        "title": "Lubrication Analysis - Level I",
+        "desc": "Monitoring oil quality and early contaminant detection inside equipment."
+      },
+      "lubrication-analysis-ii": {
+        "title": "Lubrication Analysis - Level II",
+        "desc": "Interpreting lab reports and determining machine health via oil samples."
+      },
+      "lubrication-analysis-iii": {
+        "title": "Lubrication Analysis - Level III",
+        "desc": "Managing advanced lubrication programs at the industrial facility level."
+      },
+      "rcm": {
+        "title": "Reliability-Centered Maintenance (RCM)",
+        "desc": "Methodology for defining effective maintenance strategies to preserve operational functions."
+      },
+      "rca": {
+        "title": "Root Cause Analysis (RCA)",
+        "desc": "Methodical investigation methods to discover the true causes behind recurring failures."
+      },
+      "fmea": {
+        "title": "Failure Mode and Effects Analysis (FMEA)",
+        "desc": "Assessing risks and predicting potential failure points in designs and processes."
+      },
+      "cmrp-prep": {
+        "title": "CMRP Exam Preparation",
+        "desc": "Intensive course to pass the Certified Maintenance and Reliability Professional global exam."
+      },
+      "cmrt-prep": {
+        "title": "CMRT Exam Preparation",
+        "desc": "Qualifying technicians to successfully pass the Certified Reliability Technician international exam."
+      },
+      "reliability-engineering": {
+        "title": "Applied Reliability Engineering",
+        "desc": "Calculations of failure rates, availability, and MTBF to improve asset efficiency."
+      },
+      "pumps": {
+        "title": "Industrial Pumps: Operation & Maintenance",
+        "desc": "Understanding centrifugal pump types and eliminating cavitation issues."
+      },
+      "compressors": {
+        "title": "Air & Gas Compressors",
+        "desc": "Safe operation and maintenance of reciprocating and centrifugal compressors."
+      },
+      "fans": {
+        "title": "Industrial Fans and Blowers",
+        "desc": "Mechanical balancing methods and preventive maintenance for fans."
+      },
+      "bearings": {
+        "title": "Rolling Element Bearings: Installation & Maintenance",
+        "desc": "Correct methods for mounting and dismounting bearings to prevent early failure."
+      },
+      "mechanical-seals": {
+        "title": "Mechanical Seals",
+        "desc": "Design and types of sealing systems and how to select the right type."
+      },
+      "turbines": {
+        "title": "Steam & Gas Turbines",
+        "desc": "Working principles, protection, and control systems in major turbines."
+      }
+    }
+  },
+  "Stats": {
+    "professionals": "Trained Professionals",
+    "programs": "Courses & Programs",
+    "clients": "Corporate Clients",
+    "countries": "Countries Reached"
+  },
+  "Footer": {
+    "rights": "All rights reserved to ReliNova Engineering Consulting Institute",
+    "newsletter": "Newsletter",
+    "subscribe": "Subscribe",
+    "quickLinks": "Quick Links"
+  },
+  "CategoryDetails": {
+    "viewDetails": "View Course Details & Registration",
+    "maintenance": {
+      "title": "Maintenance Courses",
+      "preventive": "Preventive Maintenance",
+      "predictive": "Predictive Maintenance",
+      "shutdown": "Shutdown Management",
+      "planning": "Planning & Scheduling",
+      "cmms": "CMMS",
+      "sappm": "SAP PM",
+      "maximo": "Maximo"
+    },
+    "condition": {
+      "title": "Condition Monitoring Systems",
+      "cmrt": "CMRT",
+      "vibration": "Vibration Analysis I–III",
+      "ultrasound": "Ultrasound",
+      "infrared": "Infrared Thermography",
+      "oil": "Oil Analysis",
+      "electrical": "Electrical Condition Monitoring"
+    },
+    "reliability": {
+      "title": "Reliability Courses",
+      "rcm": "RCM",
+      "rca": "RCA",
+      "fmea": "FMEA",
+      "cmrp": "CMRP Preparation",
+      "engineering": "Reliability Engineering"
+    },
+    "rotating": {
+      "title": "Rotating Equipment Courses",
+      "pumps": "Pumps",
+      "compressors": "Compressors",
+      "fans": "Fans",
+      "gearboxes": "Gearboxes",
+      "bearings": "Bearings",
+      "seals": "Mechanical Seals",
+      "turbines": "Turbines"
+    },
+    "levels": {
+      "basic": "Basic Level",
+      "advanced": "Advanced Level",
+      "operations": "Operations Management",
+      "planning": "Planning & Scheduling",
+      "software": "Software & Systems",
+      "sap": "SAP Systems",
+      "ibm": "IBM Systems",
+      "cmrt": "Condition Monitoring & Reliability Technician",
+      "multiple": "Multiple Levels",
+      "ultrasound": "Ultrasonic Analysis",
+      "infrared": "Infrared Thermography",
+      "oil": "Oil Analysis",
+      "electrical": "Electrical Monitoring",
+      "rcm": "Operational Reliability",
+      "rca": "Root Cause Analysis",
+      "fmea": "Risk Assessment",
+      "cmrp": "Professional Certification Prep",
+      "reliabilityEng": "Reliability Engineering",
+      "pumps": "Pumps",
+      "compressors": "Compressors",
+      "fans": "Fans",
+      "gearboxes": "Gearboxes",
+      "bearings": "Bearings",
+      "seals": "Mechanical Seals",
+      "turbines": "Turbines"
+    }
+  }
+}
