@@ -3,16 +3,38 @@
 import { useState } from 'react';
 import { Link } from '@/i18n/routing';
 import { useLocale } from 'next-intl';
+import { createClient } from '@/utils/supabase/client'; 
+import { useRouter } from 'next/navigation';
 
 export default function SignInPage() {
   const locale = useLocale();
   const isArabic = locale === 'ar';
+  const router = useRouter();
+  const supabase = createClient();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // منطق تسجيل الدخول هنا
+    setLoading(true);
+    setErrorMessage('');
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setErrorMessage(error.message);
+      setLoading(false);
+    } else {
+      // تسجيل دخول ناجح، توجيه المستخدم للصفحة الرئيسية أو لوحة التحكم
+      router.push('/');
+      router.refresh();
+    }
   };
 
   return (
@@ -26,6 +48,13 @@ export default function SignInPage() {
             {isArabic ? 'أدخل بريدك الإلكتروني وكلمة المرور للوصول إلى حسابك.' : 'Enter your email and password to access your account.'}
           </p>
         </div>
+
+        {/* عرض رسالة الخطأ إن وجدت */}
+        {errorMessage && (
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm text-center">
+            {errorMessage}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* البريد الإلكتروني */}
@@ -72,9 +101,12 @@ export default function SignInPage() {
           {/* زر تسجيل الدخول */}
           <button 
             type="submit"
-            className="w-full bg-accent hover:bg-accent-hover text-primary py-4 rounded-xl font-bold transition-all shadow-lg text-base cursor-pointer"
+            disabled={loading}
+            className="w-full bg-accent hover:bg-accent-hover text-primary py-4 rounded-xl font-bold transition-all shadow-lg text-base cursor-pointer disabled:opacity-50"
           >
-            {isArabic ? 'تسجيل الدخول' : 'Sign In'}
+            {loading 
+              ? (isArabic ? 'جاري تسجيل الدخول...' : 'Signing in...') 
+              : (isArabic ? 'تسجيل الدخول' : 'Sign In')}
           </button>
         </form>
 
