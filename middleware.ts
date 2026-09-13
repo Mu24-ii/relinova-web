@@ -6,7 +6,7 @@ import type { NextRequest } from 'next/server';
 const handleI18nRouting = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
-  const maintenanceMode = false; // خليه true لوضع الصيانة، وfalse لإعادة فتح الموقع
+  const maintenanceMode = true; // خليه true لوضع الصيانة، وfalse لإعادة فتح الموقع
 
   if (maintenanceMode) {
     // ميزة الدخول السريع لك أنت للاختبار: ?bypass=muteb123
