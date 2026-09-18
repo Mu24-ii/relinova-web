@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { createClient } from '@/utils/supabase/client'; 
 import { useRouter } from 'next/navigation';
@@ -31,8 +31,8 @@ export default function SignInPage() {
       setErrorMessage(error.message);
       setLoading(false);
     } else {
-      // تسجيل دخول ناجح، توجيه المستخدم للصفحة الرئيسية أو لوحة التحكم
-      router.push('/');
+      // تسجيل دخول ناجح، توجيه المستخدم للصفحة الرئيسية مع الحفاظ على اللغة
+      router.push(`/${locale}`);
       router.refresh();
     }
   };
@@ -91,7 +91,7 @@ export default function SignInPage() {
             </label>
 
             <Link 
-              href="/forgot-password" 
+              href={`/${locale}/forgot-password`} 
               className="text-accent hover:text-accent-hover font-semibold transition-colors"
             >
               {isArabic ? 'نسيت كلمة المرور؟' : 'Forgot password?'}
@@ -113,7 +113,7 @@ export default function SignInPage() {
         {/* تذيل النموذج (إنشاء حساب جديد) */}
         <div className="mt-8 text-center text-sm text-gray-300 border-t border-white/10 pt-6">
           {isArabic ? 'ليس لديك حساب؟ ' : "Don't have an account? "}
-          <Link href="/register" className="text-accent font-bold hover:underline">
+          <Link href={`/${locale}/register`} className="text-accent font-bold hover:underline">
             {isArabic ? 'تسجيل حساب جديد' : 'Sign Up'}
           </Link>
         </div>
