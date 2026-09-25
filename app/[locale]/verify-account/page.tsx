@@ -1,72 +1,125 @@
 'use client';
 
-import { use, useState, Suspense } from 'react';
+import React, { useState, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+import { ShieldCheck, RefreshCw } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 
 function VerifyAccountContent({ locale }: { locale: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const email = searchParams.get('email') || '';
+
+  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
+  const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const supabase = createClient();
 
-  const emailParam = searchParams.get('email') || '';
+  // التعامل مع كتابة الأرقام والانتقال التلقائي بين المربعات الـ 6
+  const handleChange = (value: string, index: number) => {
+    if (isNaN(Number(value))) return; // السماح للأرقام فقط
 
-  const [email, setEmail] = useState(emailParam);
-  const [token, setToken] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
+    const newOtp = [...otp];
+    newOtp[index] = value.substring(value.length - 1);
+    setOtp(newOtp);
 
+    // الانتقال التلقائي للمربع التالي عند الكتابة
+    if (value && index < 5) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  // التعامل مع زر الرجوع (Backspace)
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === 'Backspace') {
+      if (!otp[index] && index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      } else {
+        const newOtp = [...otp];
+        newOtp[index] = '';
+        setOtp(newOtp);
+      }
+    }
+  };
+
+  // لصق الرمز دفعة واحدة
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData('text').trim();
+    if (!/^\d{6}$/.test(pastedData)) return;
+
+    const newOtp = pastedData.split('');
+    setOtp(newOtp);
+    inputRefs.current[5]?.focus();
+  };
+
+  // التحقق من الرمز عبر Supabase
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    const otpCode = otp.join('');
+    
+    if (otpCode.length !== 6) {
+      setError(locale === 'ar' ? '⚠️ يرجى إدخال الرمز كاملاً (6 أرقام).' : '⚠️ Please enter the full 6-digit code.');
+      return;
+    }
 
-    if (!email || !token) {
-      setError(locale === 'ar' ? '⚠️ يرجى إدخال البريد الإلكتروني ورمز التحقق.' : '⚠️ Please enter both email and verification code.');
+    if (!email) {
+      setError(locale === 'ar' ? '⚠️ البريد الإلكتروني غير موجود، يرجى التسجيل مجدداً.' : '⚠️ Email not found, please register again.');
       return;
     }
 
     setLoading(true);
+    setError(null);
 
     try {
-      const { error: verifyError } = await supabase.auth.verifyOtp({
+      const { error } = await supabase.auth.verifyOtp({
         email,
-        token,
+        token: otpCode,
         type: 'signup',
       });
 
-      if (verifyError) throw verifyError;
+      if (error) throw error;
 
-      setSuccess(true);
+      setMessage(locale === 'ar' ? '🎉 تم توثيق الحساب بنجاح! جاري تحويلك...' : '🎉 Account verified successfully! Redirecting...');
       setTimeout(() => {
         router.push(`/${locale}/signin`);
       }, 1500);
 
     } catch (err: any) {
-      setError(err.message || (locale === 'ar' ? 'فشل التحقق، تأكد من صحة الرمز أو البريد.' : 'Verification failed. Please check your code or email.'));
+      setError(err.message || (locale === 'ar' ? 'فشل التحقق من الرمز، تأكد من صحته.' : 'Verification failed. Please check your code.'));
     } finally {
       setLoading(false);
     }
   };
 
+  // إعادة إرسال الرمز
   const handleResendCode = async () => {
     if (!email) {
-      setError(locale === 'ar' ? '⚠️ أدخل بريدك الإلكتروني أولاً لإعادة إرسال الرمز.' : '⚠️ Enter your email first to resend code.');
+      setError(locale === 'ar' ? '⚠️ البريد الإلكتروني غير متوفر.' : '⚠️ Email not available.');
       return;
     }
 
+    setResending(true);
+    setError(null);
+    setMessage(null);
+
     try {
-      const { error: resendError } = await supabase.auth.resend({
+      const { error } = await supabase.auth.resend({
         type: 'signup',
         email,
       });
 
-      if (resendError) throw resendError;
-
-      alert(locale === 'ar' ? '✨ تم إعادة إرسال رمز التحقق إلى بريدك الإلكتروني.' : '✨ Verification code resent to your email.');
+      if (error) throw error;
+      setMessage(locale === 'ar' ? '✉️ تم إعادة إرسال رمز التحقق إلى بريدك.' : '✉️ Verification code resent to your email.');
     } catch (err: any) {
-      setError(err.message || (locale === 'ar' ? 'فشل إعادة الإرسال.' : 'Failed to resend.'));
+      setError(err.message || (locale === 'ar' ? 'فشل إعادة إرسال الرمز.' : 'Failed to resend code.'));
+    } finally {
+      setResending(false);
     }
   };
 
@@ -81,8 +134,10 @@ function VerifyAccountContent({ locale }: { locale: string }) {
       </h1>
       <p className="text-[#B8C2D1] text-sm mb-6">
         {locale === 'ar' 
-          ? 'الرجاء إدخال البريد الإلكتروني ورمز الـ OTP المكون من أرقام.' 
-          : 'Please enter your email and the OTP verification code.'}
+          ? 'أدخل رمز التحقق المكون من 6 أرقام المرسل إلى بريدك الإلكتروني:' 
+          : 'Enter the 6-digit verification code sent to your email:'}
+        <br />
+        <span className="font-semibold text-white mt-1 inline-block">{email || 'example@domain.com'}</span>
       </p>
 
       {error && (
@@ -91,46 +146,34 @@ function VerifyAccountContent({ locale }: { locale: string }) {
         </div>
       )}
 
-      {success && (
+      {message && (
         <div className="mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-xl text-green-400 text-sm">
-          {locale === 'ar' ? '🎉 تم توثيق الحساب بنجاح! جاري تحويلك...' : '🎉 Account verified successfully! Redirecting...'}
+          {message}
         </div>
       )}
 
-      <form onSubmit={handleVerify} className="space-y-4 text-start">
-        <div>
-          <label className="block text-xs text-[#B8C2D1] mb-1">
-            {locale === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}
-          </label>
-          <input 
-            type="email" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@example.com"
-            className="w-full px-4 py-3 rounded-xl border text-white bg-[#0B1628] placeholder:text-gray-600 border-white/10 focus:border-[#D9A62E] focus:outline-none text-sm"
-            required
-          />
+      <form onSubmit={handleVerify} className="space-y-6">
+        {/* تصميم الـ 6 مربعات المنفصلة بهوية المنصة */}
+        <div className="flex justify-center gap-2 md:gap-3" dir="ltr">
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              ref={(el) => { inputRefs.current[index] = el; }}
+              type="text"
+              maxLength={1}
+              value={digit}
+              onChange={(e) => handleChange(e.target.value, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              onPaste={handlePaste}
+              className="w-11 h-12 md:w-12 md:h-14 text-center text-xl font-bold rounded-xl border border-white/10 bg-[#0B1628] text-white focus:border-[#D9A62E] focus:outline-none transition-all shadow-inner"
+            />
+          ))}
         </div>
 
-        <div>
-          <label className="block text-xs text-[#B8C2D1] mb-1">
-            {locale === 'ar' ? 'رمز التوثيق (OTP)' : 'OTP Code'}
-          </label>
-          <input 
-            type="text" 
-            maxLength={6}
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            placeholder="123456"
-            className="w-full px-4 py-3 rounded-xl border text-center text-xl tracking-widest text-white bg-[#0B1628] placeholder:text-gray-600 border-white/10 focus:border-[#D9A62E] focus:outline-none"
-            required
-          />
-        </div>
-
-        <button 
+        <button
           type="submit"
           disabled={loading}
-          className="w-full py-3.5 bg-[#D9A62E] hover:bg-[#F2C75C] text-[#0B1628] font-bold rounded-xl shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-50 mt-2"
+          className="w-full py-3.5 bg-[#D9A62E] hover:bg-[#F2C75C] text-[#0B1628] font-bold rounded-xl shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-50"
         >
           {loading 
             ? (locale === 'ar' ? 'جاري التحقق...' : 'Verifying...') 
@@ -138,18 +181,30 @@ function VerifyAccountContent({ locale }: { locale: string }) {
         </button>
       </form>
 
-      <div className="mt-6 text-sm text-[#B8C2D1]">
-        {locale === 'ar' ? 'لم تستلم الرمز؟ ' : "Didn't receive code? "}
-        <button onClick={handleResendCode} className="text-[#D9A62E] font-bold hover:underline bg-transparent border-none cursor-pointer">
-          {locale === 'ar' ? 'إعادة إرسال' : 'Resend'}
+      <div className="mt-6 flex flex-col items-center gap-3 text-sm text-[#B8C2D1] border-t border-white/10 pt-6">
+        <button
+          type="button"
+          onClick={handleResendCode}
+          disabled={resending}
+          className="flex items-center gap-2 text-[#D9A62E] font-semibold hover:underline disabled:opacity-50 bg-transparent border-none cursor-pointer"
+        >
+          <RefreshCw size={16} className={resending ? 'animate-spin' : ''} />
+          {locale === 'ar' ? 'إعادة إرسال الرمز' : 'Resend Code'}
         </button>
+
+        <div>
+          {locale === 'ar' ? 'العودة إلى ' : 'Back to '}
+          <Link href={`/${locale}/signin`} className="text-white font-bold hover:underline">
+            {locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
+          </Link>
+        </div>
       </div>
     </div>
   );
 }
 
 export default function VerifyAccountPage({ params }: { params: Promise<{ locale: string }> }) {
-  const resolvedParams = use(params);
+  const resolvedParams = React.use(params);
   const locale = resolvedParams.locale;
 
   return (

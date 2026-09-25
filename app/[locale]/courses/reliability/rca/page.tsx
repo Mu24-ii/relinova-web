@@ -2,11 +2,14 @@
 
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
-import { CheckCircle2, Users, BookOpen, Clock, Award, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, Users, BookOpen, Clock, Award, ArrowRight, ArrowLeft, Bell } from 'lucide-react';
 
 export default function RCACoursePage() {
   const locale = useLocale();
   const isArabic = locale === 'ar';
+
+  // 💡 اجعل هذه القيمة (true) إذا كانت الدورة "قريباً في المنصة"، و (false) إذا كانت متاحة للتسجيل
+  const isComingSoon = false;
 
   return (
     <main className="min-h-screen bg-[#0B1628] text-white py-12 px-6 md:px-12" dir={isArabic ? 'rtl' : 'ltr'}>
@@ -27,8 +30,17 @@ export default function RCACoursePage() {
         <div className="bg-[#142238] border border-white/10 rounded-2xl p-8 md:p-12 shadow-xl space-y-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#D9A62E]/10 rounded-full blur-3xl pointer-events-none"></div>
           
-          <div className="inline-block bg-[#D9A62E]/20 text-[#D9A62E] text-xs font-bold px-3 py-1.5 rounded-lg border border-[#D9A62E]/30">
-            {isArabic ? 'قسم تحقيقات الأعطال وحل المشكلات الهندسية' : 'Failure Investigation & Problem Solving'}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="inline-block bg-[#D9A62E]/20 text-[#D9A62E] text-xs font-bold px-3 py-1.5 rounded-lg border border-[#D9A62E]/30">
+              {isArabic ? 'قسم تحقيقات الأعطال وحل المشكلات الهندسية' : 'Failure Investigation & Problem Solving'}
+            </div>
+
+            {/* شارة توضيحية إذا كانت الدورة قريباً */}
+            {isComingSoon && (
+              <div className="inline-block bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-amber-500/35">
+                {isArabic ? '⏳ قريباً في المنصة' : '⏳ Coming Soon'}
+              </div>
+            )}
           </div>
 
           <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
@@ -53,14 +65,33 @@ export default function RCACoursePage() {
             </div>
           </div>
 
-          <div className="pt-4 flex flex-wrap gap-4">
-            <Link 
-              href="/checkout?course=rca"
-              className="bg-[#D9A62E] hover:bg-[#F2C75C] text-[#0B1628] font-bold px-8 py-3 rounded-xl text-sm transition-all shadow-lg flex items-center gap-2"
-            >
-              {isArabic ? 'سجل في الدورة الآن' : 'Enroll in Course'}
-              {isArabic ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-            </Link>
+          {/* التحكم في زر التسجيل بناءً على حالة الدورة */}
+          <div className="pt-4 flex flex-col gap-3">
+            {isComingSoon ? (
+              <div className="space-y-2">
+                <button 
+                  disabled 
+                  className="bg-gray-700/50 text-gray-400 font-bold px-8 py-3 rounded-xl text-sm cursor-not-allowed border border-white/5 flex items-center gap-2 opacity-70"
+                >
+                  <Bell className="w-4 h-4" />
+                  {isArabic ? 'التسجيل غير متاح حالياً' : 'Registration Currently Unavailable'}
+                </button>
+                <p className="text-xs text-amber-400/90 flex items-center gap-1.5 font-medium">
+                  <span>✨</span>
+                  {isArabic 
+                    ? 'هذه الدورة ستتوفر قريباً في المنصة، سيتم فتح باب التسجيل قريباً.' 
+                    : 'This course is coming soon. Registration will open shortly.'}
+                </p>
+              </div>
+            ) : (
+              <Link 
+                href="/checkout?course=rca"
+                className="bg-[#D9A62E] hover:bg-[#F2C75C] text-[#0B1628] font-bold px-8 py-3 rounded-xl text-sm transition-all shadow-lg flex items-center gap-2 w-fit"
+              >
+                {isArabic ? 'سجل في الدورة الآن' : 'Enroll in Course'}
+                {isArabic ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+              </Link>
+            )}
           </div>
         </div>
 

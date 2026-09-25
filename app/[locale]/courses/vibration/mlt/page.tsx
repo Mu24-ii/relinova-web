@@ -1,12 +1,20 @@
 'use client';
 
+import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
-import { CheckCircle2, Users, BookOpen, Clock, Award, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, Users, BookOpen, Clock, Award, ArrowRight, ArrowLeft, Bell } from 'lucide-react';
 
-export default function MachineryLubricationTechnicianCoursePage() {
+export default function MachineryLubricationTechnicianCoursePage({
+  initialIsComingSoon = true, // خاصية التحكم في حالة الدورة (قريباً أو متاحة الآن)
+}: {
+  initialIsComingSoon?: boolean;
+}) {
   const locale = useLocale();
   const isArabic = locale === 'ar';
+
+  const [isComingSoon, setIsComingSoon] = useState(initialIsComingSoon);
+  const [isNotified, setIsNotified] = useState(false);
 
   return (
     <main className="min-h-screen bg-[#0B1628] text-white py-12 px-6 md:px-12" dir={isArabic ? 'rtl' : 'ltr'}>
@@ -27,8 +35,23 @@ export default function MachineryLubricationTechnicianCoursePage() {
         <div className="bg-[#142238] border border-white/10 rounded-2xl p-8 md:p-12 shadow-xl space-y-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#D9A62E]/10 rounded-full blur-3xl pointer-events-none"></div>
           
-          <div className="inline-block bg-[#D9A62E]/20 text-[#D9A62E] text-xs font-bold px-3 py-1.5 rounded-lg border border-[#D9A62E]/30">
-            {isArabic ? 'قسم الممارسات الميدانية وتطبيق التزييت (ICML MLT Aligned)' : 'Field Practices & Lubrication Application'}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="inline-block bg-[#D9A62E]/20 text-[#D9A62E] text-xs font-bold px-3 py-1.5 rounded-lg border border-[#D9A62E]/30">
+              {isArabic ? 'قسم الممارسات الميدانية وتطبيق التزييت (ICML MLT Aligned)' : 'Field Practices & Lubrication Application'}
+            </div>
+
+            {/* شارة حالة الدورة (قريباً جداً أو متاحة) */}
+            {isComingSoon ? (
+              <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-semibold px-3 py-1.5 rounded-lg">
+                <Clock className="w-3.5 h-3.5" />
+                {isArabic ? 'قريباً جداً' : 'Coming Soon'}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1.5 rounded-lg">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                {isArabic ? 'متاحة للتسجيل الآن' : 'Available Now'}
+              </span>
+            )}
           </div>
 
           <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
@@ -53,14 +76,33 @@ export default function MachineryLubricationTechnicianCoursePage() {
             </div>
           </div>
 
+          {/* أزرار التفاعل (التسجيل أو طلب التنبيه) */}
           <div className="pt-4 flex flex-wrap gap-4">
-            <Link 
-              href="/checkout?course=machinery-lubrication-technician"
-              className="bg-[#D9A62E] hover:bg-[#F2C75C] text-[#0B1628] font-bold px-8 py-3 rounded-xl text-sm transition-all shadow-lg flex items-center gap-2"
-            >
-              {isArabic ? 'سجل في الدورة الآن' : 'Enroll in Course'}
-              {isArabic ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-            </Link>
+            {isComingSoon ? (
+              <button
+                onClick={() => setIsNotified(true)}
+                disabled={isNotified}
+                className={`font-bold px-8 py-3 rounded-xl text-sm transition-all shadow-lg flex items-center gap-2 ${
+                  isNotified
+                    ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 cursor-default'
+                    : 'bg-[#D9A62E] hover:bg-[#F2C75C] text-[#0B1628]'
+                }`}
+              >
+                <Bell className="w-4 h-4" />
+                {isNotified
+                  ? (isArabic ? 'تم تفعيل التنبيه بنجاح ✓' : 'Alert Set Successfully ✓')
+                  : (isArabic ? 'أعلمني عند الإطلاق' : 'Notify Me When Launched')
+                }
+              </button>
+            ) : (
+              <Link 
+                href="/checkout?course=machinery-lubrication-technician"
+                className="bg-[#D9A62E] hover:bg-[#F2C75C] text-[#0B1628] font-bold px-8 py-3 rounded-xl text-sm transition-all shadow-lg flex items-center gap-2"
+              >
+                {isArabic ? 'سجل في الدورة الآن' : 'Enroll in Course'}
+                {isArabic ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+              </Link>
+            )}
           </div>
         </div>
 

@@ -9,6 +9,30 @@ import LanguageSwitcher from './LanguageSwitcher';
 export default function Navbar() {
   const t = useTranslations('Navbar');
 
+  // =====================================================================
+  // تحكم كامل ومريح جداً في إظهار أو إخفاء أي رابط (true للإظهار، false للإخفاء)
+  // =====================================================================
+  const showLinks = {
+    home: true,         // الرئيسية / Home
+    about: true,        // من نحن / About
+    courses: true,      // الدورات التدريبية
+    consulting: true,   // الاستشارات الهندسية
+    services: false,    // الخدمات / Services
+    certificates: true, // الشهادات / Certificates (جديد)
+    contact: true,      // تواصل معنا / Contact
+  };
+
+  // قائمة الروابط المترابطة مع الترجمة وحالة الإظهار
+  const navLinks = [
+    { key: 'home', href: '/', show: showLinks.home, label: t('links.home') },
+    { key: 'about', href: '/about', show: showLinks.about, label: t('links.about') },
+    { key: 'courses', href: '/courses', show: showLinks.courses, label: t('links.courses') },
+    { key: 'consulting', href: '/consulting', show: showLinks.consulting, label: t('links.consulting') },
+    { key: 'services', href: '/services', show: showLinks.services, label: t('links.services') },
+    { key: 'certificates', href: '/certificates', show: showLinks.certificates, label: t('links.certificates') }, // رابط الشهادات
+    { key: 'contact', href: '/contact', show: showLinks.contact, label: t('links.contact') },
+  ];
+
   return (
     <nav className="w-full">
       {/* الشريط العلوي */}
@@ -34,14 +58,20 @@ export default function Navbar() {
           />
         </div>
 
-        {/* الروابط */}
-        <div className="flex items-center gap-5 xl:gap-6 font-semibold text-[#B8C2D1] text-[11px] xl:text-[12px] flex-wrap justify-center">
-          <Link href="/" replace className="hover:text-[#D9A62E] transition-colors">{t('links.home')}</Link>
-          <Link href="/about" replace className="hover:text-[#D9A62E] transition-colors">{t('links.about')}</Link>
-          <Link href="/courses" replace className="hover:text-[#D9A62E] transition-colors">{t('links.courses')}</Link>
-          <Link href="/consulting" replace className="hover:text-[#D9A62E] transition-colors">{t('links.consulting')}</Link>
-          <Link href="/services" replace className="hover:text-[#D9A62E] transition-colors">{t('links.services')}</Link>
-          <Link href="/contact" replace className="hover:text-[#D9A62E] transition-colors">{t('links.contact')}</Link>
+        {/* الروابط الأساسية (تتولد وتتحدث تلقائياً حسب رغبتك) */}
+        <div className="flex items-center gap-4 xl:gap-5 font-semibold text-[#B8C2D1] text-[11px] xl:text-[12px] flex-wrap justify-center">
+          {navLinks
+            .filter((link) => link.show)
+            .map((link) => (
+              <Link 
+                key={link.key} 
+                href={link.href} 
+                replace 
+                className="hover:text-[#D9A62E] transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
         </div>
 
         {/* أقصى اليمين: محول اللغات وأزرار التسجيل ودخول النظام */}
